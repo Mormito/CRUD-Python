@@ -1,79 +1,56 @@
-import sqlite3
+from sqlalchemy import create_engine, Column, String, Integer, ForeignKey
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-def criar_tabela():
-    connect = sqlite3.connect('db_fichas')
-    cursor = connect.cursor()
-    cursor.execute('''
-                   
-    CREATE TABLE IF NOT EXISTS personagens (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome VARCHAR(200), 
-    
-    classe VARCHAR(100),
-    subclasse VARCHAR(100),
-    nivel SMALLINT,
+db = create_engine("sqlite:///db_fichas.db")
+Session = sessionmaker(bind=db) #Objeto para criação de sessão
+session = Session()
 
-    forca SMALLINT,
-    destreza SMALLINT,
-    vigor SMALLINT,
-    inteligencia SMALLINT,
-    sabedoria SMALLINT
-)
-''')
-    
-    connect.commit()
-    connect.close()
+Base = declarative_base() 
 
-def add_personagem(nome, classe, subclasse, nivel, forca, destreza, vigor, inteligencia, sabedoria):
-    connect = sqlite3.connect('db_fichas')
-    cursor = connect.cursor()
+#Tables
+class Personagens(Base):
+    __tablename__ = "Personagens"
+    id = Column("id", Integer, primary_key=True, autoincrement=True)
+    nome = Column("nome", String)
+    hp = Column("hp", Integer)
+    pm = Column("pm", Integer)
 
-    cursor.execute('''INSERT INTO personagens 
-    (nome, classe, subclasse, nivel, forca, destreza, vigor, inteligencia, sabedoria) 
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)''', (nome, classe, subclasse, nivel, forca, destreza, vigor, inteligencia, sabedoria))
+    classe = Column("classe", String)
+    subclasse = Column("subclasse", String)
 
-    connect.commit()
-    connect.close()
-    
+    level = Column("level", Integer)
+    str = Column("str", Integer)
+    dex = Column("dex", Integer)
+    con = Column("con", Integer)
+    int = Column("int", Integer)
+    wis = Column("wis", Integer)
+    cha = Column("cha", Integer)
 
-def listar_personagens():
-    connect = sqlite3.connect('db_fichas')
-    cursor = connect.cursor()
+    descricao = Column("descricao", String)
 
-    cursor.execute('''SELECT * FROM personagens''')
+    def __init__(self, nome, hp, pm, classe, subclasse, level, str, dex, con, int, wis, cha, descricao):
+        self.nome = nome
+        self.hp = hp
+        self.pm = pm
+        self.classe = classe
+        self.subclasse = subclasse
+        self.level = level
+        self.str = str
+        self.dex = dex
+        self.con = con
+        self.int = int
+        self.wis = wis
+        self.cha = cha
+        self.descricao = descricao
 
-    personagens = cursor.fetchall()
-    for personagem in personagens:
-        print(personagem)
-    connect.close()
+Base.metadata.create_all(bind=db)
 
+#CRUD
 
-def atualizar_personagem(nome, classe, subclasse, nivel, forca, destreza, vigor, inteligencia, sabedoria):
-    connect = sqlite3.connect('db_fichas')
-    cursor = connect.cursor()
-
-    cursor.execute('''UPDATE personagens SET nome = ?, classe = ?, subclasse = ?, nivel = ?, forca = ?, destreza = ?, vigor = ?, 
-    inteligencia = ?, sabedoria = ?''', (nome, classe, subclasse, nivel, forca, destreza, vigor, inteligencia, sabedoria))
-
-    connect.commit()
-    connect.close()
-
-
-def deletar_personagem(id):
-    connect = sqlite3.connect('db_fichas')
-    cursor = connect.cursor()
-
-    cursor.execute('''DELETE FROM personagens WHERE id = ?''', (id,))
-
-    connect.commit()
-    connect.close()
-
-
-
-criar_tabela()
-listar_personagens()
-atualizar_personagem("Mormito", "Lutador", "Technomancer", 20, 16, 14, 14, 18, 16)
-listar_personagens()
-
+#create: 
+#template: personagem = Personagens(nome="", hp="", pm="", classe="", subclasse="", level="", str="", dex="", con="", int="", wis="", cha="", descricao="")
+personagem = Personagens(nome="Mormito", hp="30", pm="10", classe="Technomancer", subclasse="N/A", level="19", str="16", dex="16", con="16", int="18", wis="14", cha="14", descricao="lorem ipsum dolor")
+session.add(personagem)
+session.commit()
 
 
