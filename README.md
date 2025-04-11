@@ -1,5 +1,12 @@
 # Python-CRUD
 
+Etapas do desenvolvimento:
+- Criação do banco ✅
+- CRUD ✅
+- Criação do front-end ❌
+- Conexão do front-end com o back-end ❌
+- Produto final ❌
+
 CRUD desenvolvido com:
 - Python
 - SQLAlchemy (ORM)
