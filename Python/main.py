@@ -12,6 +12,7 @@ session = Session()
 
 Base = declarative_base() 
 
+
 #Tables
 class Personagens(Base):
     __tablename__ = "Personagens"
@@ -20,6 +21,7 @@ class Personagens(Base):
     hp = Column("hp", Integer)
     pm = Column("pm", Integer)
 
+    raca = Column("raca", String)
     classe = Column("classe", String)
     subclasse = Column("subclasse", String)
 
@@ -33,10 +35,11 @@ class Personagens(Base):
 
     descricao = Column("descricao", String)
 
-    def __init__(self, nome, hp, pm, classe, subclasse, level, str, dex, con, int, wis, cha, descricao):
+    def __init__(self, nome, hp, pm, raca, classe, subclasse, level, str, dex, con, int, wis, cha, descricao):
         self.nome = nome
         self.hp = hp
         self.pm = pm
+        self.raca = raca
         self.classe = classe
         self.subclasse = subclasse
         self.level = level
@@ -55,6 +58,7 @@ def create():
     nome="Rubens"
     hp=15 
     pm=30
+    raca="Humano"
     classe="Mago"
     subclasse="N/A" 
     level=17
@@ -66,7 +70,7 @@ def create():
     cha=14 
     descricao="Um mago implacavel"
 
-    personagem = Personagens(nome=nome, hp=hp, pm=pm, classe=classe, subclasse=subclasse, 
+    personagem = Personagens(nome=nome, hp=hp, pm=pm, raca=raca, classe=classe, subclasse=subclasse, 
     level=level, str=str, dex=dex, con=con, int=int, wis=wis, cha=cha, descricao=descricao)
     session.add(personagem)
     session.commit()
@@ -76,7 +80,7 @@ def read_all():
     personagens = session.query(Personagens).all()
     for p in personagens:
         print(
-        f"ID: {p.id}, Nome: {p.nome}, HP: {p.hp}, PM: {p.pm}, "
+        f"ID: {p.id}, Nome: {p.nome}, HP: {p.hp}, PM: {p.pm}, Raca: {p.raca}, "
         f"Classe: {p.classe}, Subclasse: {p.subclasse}, Level: {p.level}, "
         f"STR: {p.str}, DEX: {p.dex}, CON: {p.con}, "
         f"INT: {p.int}, WIS: {p.wis}, CHA: {p.cha}, "
