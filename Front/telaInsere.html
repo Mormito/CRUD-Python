@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Menu</title>
+</head>
+<body class="bg-stone-900">
+
+    <div class="flex flex-col justify-center items-center align-middle w-screen h-screen gap-4">
+
+        <form class="flex flex-col justify-center items-center align-middle w-1/4 h-100 space-y-5 rounded-2xl bg-stone-800 border-2 border-white">
+            <h3 class="text-2xl text-white font-semibold">Insira os dados</h3>
+
+            <input type="text" name="nome" placeholder="Nome" class="bg-white text-black outline-none w-70 h-10">
+
+            <div class="flex flex-row justify-center items-center align-middle w-full gap-2 pl-3 pr-3">
+                <a href="index.html" class="flex justify-center items-center text-lg p-5 w-1/2 h-8 rounded text-white bg-stone-700 transition hover:bg-red-500">Voltar</a>
+                <button type="submit" class="flex justify-center items-center text-lg p-5 w-1/2 h-8 rounded text-white bg-stone-700 transition hover:bg-green-500 cursor-pointer">Criar Ficha</button>
+            </div>
+            
+        </form>
+        
+    </div>
+    
+</body>
+</html>
